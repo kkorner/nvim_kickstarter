@@ -143,7 +143,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "| ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
@@ -460,6 +460,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			-- vim.keymap.set("n", "<leader>b", ":ls<CR>", { desc = "list buffers" })
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -580,7 +581,7 @@ require("lazy").setup({
 					vim.keymap.set("n", "<leader>b", function()
 						tsbuiltin.buffers({
 							sort_mru = true,
-							ignore_current_buffer = true,
+							ignore_current_buffer = false,
 						})
 					end)
 
@@ -598,7 +599,10 @@ require("lazy").setup({
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header.
-					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					-- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					map("gD", function()
+						require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
+					end, "Jump to declaration")
 
 					-- The following two autocommands are used to highlight references of the
 					-- word under your cursor when your cursor rests there for a little while.
@@ -647,7 +651,7 @@ require("lazy").setup({
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
+				clangd = {},
 				-- gopls = {},
 				-- pyright = {},
 				-- rust_analyzer = {},
