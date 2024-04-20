@@ -576,6 +576,14 @@ require("lazy").setup({
 						"[W]orkspace [S]ymbols"
 					)
 
+					local tsbuiltin = require("telescope.builtin")
+					vim.keymap.set("n", "<leader>b", function()
+						tsbuiltin.buffers({
+							sort_mru = true,
+							ignore_current_buffer = true,
+						})
+					end)
+
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.
 					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
