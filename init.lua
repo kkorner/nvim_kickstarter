@@ -301,7 +301,14 @@ require("lazy").setup({
 	--
 	--  This is equivalent to:
 	--    require('Comment').setup({})
-
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
 	-- "gc" to comment visual regions/lines
 	{
 		"numToStr/Comment.nvim",
@@ -376,6 +383,29 @@ require("lazy").setup({
 			require("which-key").register({
 				["<leader>h"] = { "Git [H]unk" },
 			}, { mode = "v" })
+		end,
+	},
+	{
+
+		"nvim-lualine/lualine.nvim",
+		lazy = false,
+		config = function()
+			require("lualine").setup({
+				options = {
+					theme = "auto",
+					globalstatus = true,
+					component_separators = { left = "|", right = "|" },
+					section_separators = { left = "", right = "" },
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { "buffers" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_y = { "progress" },
+					lualine_z = { "location" },
+				},
+				tabline = {},
+			})
 		end,
 	},
 
