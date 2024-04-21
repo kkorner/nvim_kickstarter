@@ -347,6 +347,13 @@ require("lazy").setup({
 			},
 		},
 	},
+	{
+		"RRethy/vim-illuminate",
+		lazy = false,
+		config = function()
+			require("illuminate").configure({})
+		end,
+	},
 
 	-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 	--
